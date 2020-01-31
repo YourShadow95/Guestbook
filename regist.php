@@ -20,7 +20,7 @@ if(!empty($_POST['submit']))
     $validator->checkMaxLen('user_name', $_POST['user_name'], 'users', 'username');
     $validator->checkMaxLen('first_name', $_POST['first_name'], 'users', 'first_name');
     $validator->checkMaxLen('last_name', $_POST['last_name'], 'users', 'last_name');
-    $validator->checkMinxLen('password', $_POST['password'], 6);
+    $validator->checkMinLen('password', $_POST['password'], 6);
     $validator->checkMatch('password', $_POST['password'], 'confirm_password', $_POST['confirm_password']);
     $errors = $validator->errors;
     if(empty($errors))

@@ -38,17 +38,8 @@ class Valid
             return $this->errors[] = $name."слишком много символов".$maxLen." максимальная длинна!";
         } else {return 0;}
     }
-    public function checkMinLen($name, $value, $minLen)
-    {
-        $name = ucfirst(str_replace("_", " ", $name));
-        if(strlen($value)< $minLen)
-        {
-            return $this->errors[] = $name." слишком мало символов".$minLen." минимальное количество символов!";
-        } else {return 0;}
 
-    }
-
-    public function checkMinxLen($name, $value, $int)
+    public function checkMinLen($name, $value, $int)
     {
         $name = ucfirst(str_replace("_", " ", $name));
         if(strlen($value)<$int)
