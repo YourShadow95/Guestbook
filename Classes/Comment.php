@@ -14,6 +14,7 @@ class Comment extends DB
         $stmt = $this->conn->prepare('INSERT INTO comments (`user_id`, `text`) VALUES (:user_id, :text)');
         $stmt->execute(array('user_id'=>$this->userId, 'text'=>$this->text));
         $this->id = $this->conn->lastInsertId();
+        setcookie('saved', true, time()+5);
         return $this->id;
     }
     public function findAll()
@@ -47,7 +48,7 @@ class Comment extends DB
     {
         $stmt = $this->conn->prepare("DELETE FROM comments --");
         $stmt->execute();
-        setcookie('clear', true, time()+3);
+        setcookie('clear', true, time()+5);
     }
     private function lenCom()
     {
