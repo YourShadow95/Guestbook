@@ -1,4 +1,7 @@
 <?php
+
+use Classes\Valid\Valid;
+
 require_once ('config.php');
 if(!empty($_SESSION['id']))
 {
