@@ -1,8 +1,9 @@
 <?php
-include_once ('Classes/DB.php');
-include_once ('Classes/User.php');
-include_once ('Classes/Comment.php');
-include_once ('Classes/Valid.php');
+
+session_start();
+
+require_once __DIR__ . '/vendor/autoload.php';
+
 define("HOST", "localhost");
 define("USER", 'root');
 define("PASSWORD", '');

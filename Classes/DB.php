@@ -1,6 +1,6 @@
 <?php
 
-namespace Classes;
+namespace Guestbook\Classes;
 
 use PDO;
 use PDOException;

@@ -1,4 +1,8 @@
 <?php
+
+use Guestbook\Classes\User;
+use Guestbook\Classes\Valid;
+
 require_once ("config.php");
 $requestBody = file_get_contents('php://input');
 $data = json_decode($requestBody, true);
@@ -11,6 +15,7 @@ if(!empty($cmd) && !empty($value))
     switch ($cmd)
     {
         case 'check_user_name':
+
             $isAvalible = $validator->isUsernameAvailable($value);
             if(!$isAvalible)
             {
@@ -18,7 +23,7 @@ if(!empty($cmd) && !empty($value))
             }
             else
             {
-                $response = ['success' => 0, 'error' => $validator->errors];
+                $response = ['success' => 0, 'error' => $validator->getErrors()];
             }
             break;
         case 'check_email':
@@ -29,7 +34,7 @@ if(!empty($cmd) && !empty($value))
             }
             else
             {
-                $response = ['success' => 0, 'error' => $validator->errors];
+                $response = ['success' => 0, 'error' => $validator->getErrors()];
             }
             break;
         default:

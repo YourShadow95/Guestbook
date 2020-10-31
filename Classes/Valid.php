@@ -1,6 +1,6 @@
 <?php
 
-namespace Classes;
+namespace Guestbook\Classes;
 
 use Exception;
 
@@ -78,5 +78,10 @@ class Valid
     private function setError(string $error): void
     {
         $this->errors[] = $error;
+    }
+
+    public function getErrors(): array
+    {
+        return $this->errors;
     }
 }

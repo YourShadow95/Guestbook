@@ -1,6 +1,10 @@
 <?php
-session_start();
+
+use Guestbook\Classes\Comment;
+use Guestbook\Classes\User;
+
 require_once ('config.php');
+
 if(empty($_SESSION['id']))
 {
     header("location: login.php");
