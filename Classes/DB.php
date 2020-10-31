@@ -1,5 +1,9 @@
 <?php
 
+namespace Classes;
+
+use PDO;
+use PDOException;
 
 class DB
 {
@@ -14,9 +18,11 @@ class DB
     {
         $dsn = "mysql:host=".$this->_host.";dbname=".$this->_dbname.";charset=utf8";
         try {
+
             $this->conn = new PDO($dsn, $this->_user, $this->_password);
-        } catch (PDOException $e)
-        {
+
+        } catch (PDOException $e) {
+
             $this->conn = null;
             $this->_error = $e->getMessage();
         }
@@ -25,8 +31,8 @@ class DB
     public function getError()
     {
         return $this->_error;
-
     }
+
     public function getMaxLen($table, $column)
     {
         $stmt = $this->conn->prepare('select COLUMN_NAME, CHARACTER_MAXIMUM_LENGTH
@@ -35,7 +41,7 @@ class DB
                                         TABLE_NAME = :table AND COLUMN_NAME = :column');
         $stmt->execute(array('table' =>$table, 'column' => $column));
         $column = $stmt->fetch(PDO::FETCH_LAZY);
+
         return $column['CHARACTER_MAXIMUM_LENGTH'];
     }
-
 }

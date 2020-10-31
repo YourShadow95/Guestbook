@@ -1,5 +1,8 @@
 <?php
 
+namespace Classes;
+
+use PDO;
 
 class Comment extends DB
 {
@@ -15,13 +18,16 @@ class Comment extends DB
         $stmt->execute(array('user_id'=>$this->userId, 'text'=>$this->text));
         $this->id = $this->conn->lastInsertId();
         setcookie('saved', true, time()+5);
+
         return $this->id;
     }
+
     public function findAll()
     {
         $stmt= $this->conn->prepare('SELECT * FROM comments ORDER BY DESC');
         $stmt->execute();
         $coms = [];
+
         while($row = $stmt->fetch(PDO::FETCH_LAZY))
         {
             $coms[] = ['id' => $row->id,
@@ -30,6 +36,7 @@ class Comment extends DB
                            'created_at' => $row->created_at
                 ];
         }
+
         return $coms;
     }
 
@@ -37,23 +44,28 @@ class Comment extends DB
     {
         return ceil($this->lenCom()/$this->notesOnPage);
     }
+
     public function pagin($page)
     {
         $from = ($page-1)*$this->notesOnPage;
         $stmt = $this->conn->prepare("SELECT * FROM comments ORDER BY id DESC LIMIT  $from,$this->notesOnPage");
         $stmt->execute();
+
         return $stmt->fetchAll();
     }
+
     public function clean()
     {
         $stmt = $this->conn->prepare("DELETE FROM comments --");
         $stmt->execute();
         setcookie('clear', true, time()+5);
     }
+
     private function lenCom()
     {
         $stmt = $this->conn->prepare ("SELECT COUNT(*) as count FROM comments");
         $stmt->execute();
+
         return $stmt->fetch(PDO::FETCH_ASSOC)['count'];
     }
 }

@@ -1,67 +1,82 @@
 <?php
 
+namespace Classes;
+
+use Exception;
 
 class Valid
 {
     private $_db;
-    public $errors = [];
+    private $errors = [];
 
     public function __construct($db)
     {
         $this->_db = $db;
     }
 
-    public function checkEmpty($name, $value)
+    public function checkEmpty(string $name, string $value): void
     {
         $name = ucfirst(str_replace("_", " ", $name));
-        if (empty($value))
-        {
-            return $this->errors[] = "Пожалустай, заполните поле ". $name;
-        } else { return 0;}
+
+        if (empty($value)) {
+            $this->setError("Пожалустай, заполните поле " . $name);
+        }
     }
 
-    public function checkMatch($name1, $value1, $name2, $value2)
+    public function checkMatch($name1, $value1, $name2, $value2): void
     {
         $name1 = ucfirst(str_replace("_", " ", $name1));
         $name2 = ucfirst(str_replace("_", " ", $name2));
-        if ($value1 !== $value2)
-        {
-            return $this->errors [] = "Ваш ".$name2. " не соответствует ".$name1.'!';
-        } else { return 0;}
+
+        if ($value1 !== $value2) {
+            $this->setError("Ваш " . $name2 . " не соответствует " . $name1 . '!');
+        }
     }
-    public function checkMaxLen($name, $value, $table, $column)
+
+    public function checkMaxLen(string $name, string $value, string $table, string $column): void
     {
         $name = ucfirst(str_replace("_", " ", $name));
         $maxLen = $this->_db->getMaxLen($table, $column);
-        if(strlen($value) > $maxLen)
-        {
-            return $this->errors[] = $name."слишком много символов".$maxLen." максимальная длинна!";
-        } else {return 0;}
-    }
 
-    public function checkMinLen($name, $value, $int)
-    {
-        $name = ucfirst(str_replace("_", " ", $name));
-        if(strlen($value)<$int)
-        {
-            return $this->errors[]= $name." слишком короткий! ".$int." минимальное количество символов!";
+        if(strlen($value) > $maxLen) {
+            $this->setError($name . "слишком много символов" . $maxLen . " максимальная длинна!");
         }
     }
-    public function isUsernameAvailable($userName)
+
+    public function checkMinLen(string $name, string $value, int $len): void
     {
-        $isExist = $this->_db->getUserName($userName);
-        if(!$isExist)
-        {
-            return false;
-        } else { return $this->errors = $userName." уже используется!";}
+        $name = ucfirst(str_replace("_", " ", $name));
+
+        if(strlen($value) < $len) {
+            $this->setError($name . " слишком короткий! " . $len . " минимальное количество символов!");
+        }
     }
 
-    public function isEmailAvailable($email)
+    public function isUsernameAvailable(string $userName): bool
     {
-        $isExist = $this->_db->getEmail($email);
-        if(!$isExist)
-        {
-            return false;
-        } else { return $this->errors = $email." уже используется!";}
+        if ($this->_db->getUserName($userName)) {
+            $this->throwIsAvailableError($userName);
+        }
+
+        return false;
+    }
+
+    public function isEmailAvailable(string $email): bool
+    {
+        if ($this->_db->getEmail($email)) {
+            $this->throwIsAvailableError($email);
+        }
+
+        return false;
+    }
+
+    public function throwIsAvailableError(string $entity): Exception
+    {
+        throw new Exception($entity . " уже используется!");
+    }
+
+    private function setError(string $error): void
+    {
+        $this->errors[] = $error;
     }
 }
