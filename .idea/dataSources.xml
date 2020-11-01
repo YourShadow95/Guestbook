@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="minibd@localhost" uuid="7145c9e4-d1d6-4af7-8a80-aa88e231ed6a">
-      <driver-ref>mysql.8</driver-ref>
+    <data-source source="LOCAL" name="PostgreSQL - guestbook@localhost" uuid="6eca8049-61fc-4d22-af2f-ed8ff342aef9">
+      <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/minibd?serverTimezone=UTC</jdbc-url>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/guestbook</jdbc-url>
     </data-source>
   </component>
 </project>

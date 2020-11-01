@@ -3,5 +3,8 @@
     "psr-4": {
       "Guestbook\\Classes\\" : "Classes"
     }
+  },
+  "require": {
+    "symfony/var-dumper": "^5.1"
   }
 }

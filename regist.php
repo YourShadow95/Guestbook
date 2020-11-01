@@ -1,6 +1,8 @@
 <?php
 
-use Classes\Valid\Valid;
+use Guestbook\Classes\DB;
+use Guestbook\Classes\User;
+use Guestbook\Classes\Valid;
 
 require_once ('config.php');
 if(!empty($_SESSION['id']))
@@ -25,7 +27,7 @@ if(!empty($_POST['submit']))
     $validator->checkMaxLen('last_name', $_POST['last_name'], 'users', 'last_name');
     $validator->checkMinLen('password', $_POST['password'], 6);
     $validator->checkMatch('password', $_POST['password'], 'confirm_password', $_POST['confirm_password']);
-    $errors = $validator->errors;
+    $errors = $validator->getErrors();
     if(empty($errors))
     {
         $user = new User();
